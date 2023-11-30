@@ -7,7 +7,7 @@ from tensorflow import keras
 import numpy as np
 from PIL import Image
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, templating
 from keras.utils import img_to_array
 model = keras.models.load_model('./model.h5')
 
@@ -46,7 +46,11 @@ def get_species(x):
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/', methods=["GET"])
+def home():
+    return templating.render_template('index.html')
+
+@app.route("/breed-api", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         file = request.files.get('file')
@@ -57,18 +61,20 @@ def index():
             image_bytes = file.read()
             pillow_img = Image.open(io.BytesIO(image_bytes))
             tensor = transform_image(pillow_img)
-            class_probabilities = predict(tensor)
-
-            # Assuming 'breed' is defined somewhere
-            prediction = np.argmax(class_probabilities)
-            species = ' (' + get_species(prediction) + ')'
+            prediction = predict(tensor)
             
-            data = {"prediction": breed[prediction] + species, "class_probabilities": class_probabilities.tolist()}
+            species = ' (' + get_species(prediction) + ')'
+            data = {"prediction": breed[prediction] + species}
             return jsonify(data)
         except Exception as e:
             return jsonify({"error": str(e)})
 
     return "OK"
+
+
+if __name__ == "__main__":
+    app.run(debug=False, port=5000)
+
 # def index():
 #     if request.method == "POST":
 #         file = request.files.get('file')
@@ -79,16 +85,15 @@ def index():
 #             image_bytes = file.read()
 #             pillow_img = Image.open(io.BytesIO(image_bytes))
 #             tensor = transform_image(pillow_img)
-#             prediction = predict(tensor)
-            
+#             class_probabilities = predict(tensor)
+
+#             # Assuming 'breed' is defined somewhere
+#             prediction = np.argmax(class_probabilities)
 #             species = ' (' + get_species(prediction) + ')'
-#             data = {"prediction": breed[prediction] + species}
+            
+#             data = {"prediction": breed[prediction] + species, "class_probabilities": class_probabilities.tolist()}
 #             return jsonify(data)
 #         except Exception as e:
 #             return jsonify({"error": str(e)})
 
-#     return "OK"
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    # return "OK"
