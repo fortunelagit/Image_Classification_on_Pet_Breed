@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Breed API</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #favicon {
+            width: 100px; /* Adjust the width as needed */
+            height: 100px; /* Adjust the height as needed */
+        }
+    </style>
+</head>
+<body>
+    <img id="favicon" src="{{ url_for('static', filename='favicon.png') }}" alt="Favicon">
+    <h1>This is a Flask App containerized with Docker</h1>
+    <h2>Use POST request and send the image to <a href="/breed-api">link.</a></h2>
+</body>
+</html>

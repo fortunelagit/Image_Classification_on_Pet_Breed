@@ -1,3 +1,14 @@
 Abyssinian_24.jpg
 american_bulldog_19.jpg
 req.py
+/api_container/README.md
+/api_container/*.pyc
+/api_container/*.pyo
+/api_container/*.pyd
+/api_container/__pycache__
+/api_container/.pytest_cache
+/api_container/*.ipynb
+/api_container/model.h5
+/api_container/*.ipynb
+/api_container/*.jpg
+/api_container/*.png

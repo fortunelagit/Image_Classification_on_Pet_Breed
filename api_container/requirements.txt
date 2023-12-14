@@ -1,0 +1,9 @@
+Flask==3.0.0
+Pillow==10.1.0
+numpy==1.25.0
+torch==2.1.0
+torchvision==0.16.0
+tensorflow==2.14.0
+pytorch_pretrained_vit==0.0.7
+gunicorn==21.2.0
+waitress==2.1.2
